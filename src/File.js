@@ -1,24 +1,11 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const File = () => {
-  const [counter, setCounter] = useState(0);
+  const number = useSelector((state) => state.counter.value);
   return (
     <div>
-      <h1>The Value of counter is {counter}</h1>
-      <button
-        onClick={() => {
-          setCounter(counter + 1);
-        }}
-      >
-        Increase
-      </button>
-      <button
-        onClick={() => {
-          setCounter(counter - 1);
-        }}
-      >
-        Decrease
-      </button>
+      <h1>The Value of getting from counter is {number}</h1>
     </div>
   );
 };
