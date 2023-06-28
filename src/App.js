@@ -1,14 +1,23 @@
 import "./App.css";
 import File from "./File";
 import Counter from "./features/counter/counter";
+import Demo from "./component/demo";
+import AppNavBar from "./common/AppNavBar";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./Home";
+import Employee from "./component/Employee";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome to Record Desk</h1>
-      <Counter />
-      <File />
-    </div>
+    <>
+      <Router>
+        <AppNavBar />
+        <Routes>
+          <Route exact path="/" Component={Home} />
+          <Route exact path="/employee" Component={Employee} />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
