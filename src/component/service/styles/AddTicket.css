@@ -1,0 +1,56 @@
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+form {
+    background-color: #9cf;
+    padding: 0px 20px;
+    border-radius: 10px;
+    justify-content: center;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+}
+label {
+    font-size: 20px;
+    color: gray;
+}
+select {
+    padding: 10px;
+    margin: 10px 0px;
+}
+input{
+    width: 100%;
+        height: 30px;
+        text-align: center;
+}
+#add-btn {
+    width: 50%;
+    height: 50px;
+    padding: 10px;
+    border: none;
+    background-color: rebeccapurple;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+#table-heading {
+    background-color: rebeccapurple;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}

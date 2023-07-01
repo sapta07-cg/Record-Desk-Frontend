@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Employee from "./component/Employee";
 import Admin from "./Admin";
+import AddTicket from "./component/service/AddTicket";
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
       <Router>
         <AppNavBar />
         <Routes>
-          <Route exact path="/" Component={Home} />
+          <Route exact path="/" Component={AddTicket} />
           <Route exact path="/employee" Component={Employee} />
           <Route exact path="/admin" Component={Admin} />
         </Routes>
