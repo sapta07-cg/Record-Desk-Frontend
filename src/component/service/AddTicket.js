@@ -1,6 +1,32 @@
+import { useState } from "react";
 import "./styles/AddTicket.css";
+import { useDispatch } from "react-redux";
+import { createTicket } from "../../redux/features/ticketDetailSlice";
 
 const AddTicket = () => {
+  const [ticket, setTicket] = useState({
+    name: "",
+    team_name: "",
+    date: "",
+    incidentNumber: "",
+    status: "",
+    entity: "",
+    slot: "",
+    remarks: "",
+  });
+  const dispatch = useDispatch();
+
+  const getTicketData = (e) => {
+    setTicket({ ...ticket, [e.target.name]: [e.target.value] });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("tiicket details :", ticket);
+    dispatch(createTicket);
+    console.log("data submitted");
+  };
+
   return (
     <div className="container">
       <div className="heading">
@@ -13,7 +39,7 @@ const AddTicket = () => {
           </div>
           <hr />
           <div>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div class="form-group">
                 <label for="exampleInputPassword1">Name</label>
                 <input
@@ -22,6 +48,8 @@ const AddTicket = () => {
                   id="exampleInputPassword1"
                   placeholder="Enter your Name"
                   name="name"
+                  value={ticket.name}
+                  onChange={getTicketData}
                 />
               </div>
               <div class="form-group">
@@ -32,6 +60,8 @@ const AddTicket = () => {
                   id="exampleInputPassword1"
                   placeholder="Enter your Team Name"
                   name="team_name"
+                  value={ticket.team_name}
+                  onChange={getTicketData}
                 />
               </div>
               <div class="form-group">
@@ -41,6 +71,8 @@ const AddTicket = () => {
                   class="form-control"
                   id="exampleInputPassword1"
                   name="date"
+                  value={ticket.date}
+                  onChange={getTicketData}
                 />
               </div>
               <div class="form-group">
@@ -51,14 +83,21 @@ const AddTicket = () => {
                   id="exampleInputPassword1"
                   placeholder="Enter incident number"
                   name="incidentNumber"
-                  pattern="[A-Z]{3}\d{7}"
-                  maxLength="10"
-                  minLength="10"
+                  value={ticket.incidentNumber}
+                  //   pattern="[A-Z]{3}\d{7}"
+                  //   maxLength="10"
+                  //   minLength="10"
+                  onChange={getTicketData}
                 />
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Status</label>
-                <select id="team-select" name="status">
+                <select
+                  id="team-select"
+                  name="status"
+                  value={ticket.status}
+                  onChange={getTicketData}
+                >
                   <option value="">--Please choose an option--</option>
                   <option value="Pending Customer">Pending Customer</option>
                   <option value="Work in Progress">Work in Progress</option>
@@ -69,7 +108,12 @@ const AddTicket = () => {
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Entity Name</label>
-                <select id="team-select" name="entity">
+                <select
+                  id="team-select"
+                  name="entity"
+                  value={ticket.entity}
+                  onChange={getTicketData}
+                >
                   <option value="">--Please choose an option--</option>
                   <option value="DOH">DOH</option>
                   <option value="ADAFSA">ADAFSA</option>
@@ -84,7 +128,12 @@ const AddTicket = () => {
                 <label for="exampleInputPassword1">
                   Slot(1-Before 12AM, 2-12AM to 4PM,3-After 4PM)
                 </label>
-                <select id="team-select" name="slot">
+                <select
+                  id="team-select"
+                  name="slot"
+                  value={ticket.slot}
+                  onChange={getTicketData}
+                >
                   <option value="">--Please choose an option--</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -99,6 +148,8 @@ const AddTicket = () => {
                   id="exampleInputPassword1"
                   placeholder="enter remarks"
                   name="remarks"
+                  value={ticket.remarks}
+                  onChange={getTicketData}
                 />
               </div>
               <button type="submit" id="add-btn">
