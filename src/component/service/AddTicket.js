@@ -1,7 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/AddTicket.css";
-import { useDispatch } from "react-redux";
-import { createTicket } from "../../redux/features/ticketDetailSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createTicket,
+  deleteTicket,
+  getTicket,
+} from "../../redux/features/ticketDetailSlice";
+import Spinner from "../../common/Spinner";
 
 const AddTicket = () => {
   const [ticket, setTicket] = useState({
@@ -15,16 +20,46 @@ const AddTicket = () => {
     remarks: "",
   });
   const dispatch = useDispatch();
+  const { tickets, loading } = useSelector((state) => state.app);
 
-  const getTicketData = (e) => {
-    setTicket({ ...ticket, [e.target.name]: [e.target.value] });
+  console.log("user details ", tickets);
+
+  //get data from API
+
+  useEffect(() => {
+    dispatch(getTicket());
+    // console.log("data received in home page");
+  }, [dispatch]);
+
+  // const getTicketData = (e) => {
+  //   setTicket({ ...ticket, [e.target.name]: [e.target.value] });
+  // };
+
+  const inputEvent = (event) => {
+    console.log(event.target.value);
+
+    const { name, value } = event.target;
+
+    console.log(value);
+
+    setTicket((preValue) => {
+      return {
+        ...preValue,
+        [name]: value,
+      };
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("tiicket details :", ticket);
-    dispatch(createTicket);
-    console.log("data submitted");
+    dispatch(createTicket(ticket));
+    console.log("checking inputs", ticket);
+  };
+
+  const handleDelete = (id) => {
+    console.log("delete item id id", id);
+    dispatch(deleteTicket(id));
+    dispatch(getTicket());
   };
 
   return (
@@ -49,7 +84,7 @@ const AddTicket = () => {
                   placeholder="Enter your Name"
                   name="name"
                   value={ticket.name}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 />
               </div>
               <div class="form-group">
@@ -61,7 +96,7 @@ const AddTicket = () => {
                   placeholder="Enter your Team Name"
                   name="team_name"
                   value={ticket.team_name}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 />
               </div>
               <div class="form-group">
@@ -72,7 +107,7 @@ const AddTicket = () => {
                   id="exampleInputPassword1"
                   name="date"
                   value={ticket.date}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 />
               </div>
               <div class="form-group">
@@ -87,7 +122,7 @@ const AddTicket = () => {
                   //   pattern="[A-Z]{3}\d{7}"
                   //   maxLength="10"
                   //   minLength="10"
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 />
               </div>
               <div class="form-group">
@@ -96,7 +131,7 @@ const AddTicket = () => {
                   id="team-select"
                   name="status"
                   value={ticket.status}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 >
                   <option value="">--Please choose an option--</option>
                   <option value="Pending Customer">Pending Customer</option>
@@ -112,7 +147,7 @@ const AddTicket = () => {
                   id="team-select"
                   name="entity"
                   value={ticket.entity}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 >
                   <option value="">--Please choose an option--</option>
                   <option value="DOH">DOH</option>
@@ -132,7 +167,7 @@ const AddTicket = () => {
                   id="team-select"
                   name="slot"
                   value={ticket.slot}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 >
                   <option value="">--Please choose an option--</option>
                   <option value="1">1</option>
@@ -149,7 +184,7 @@ const AddTicket = () => {
                   placeholder="enter remarks"
                   name="remarks"
                   value={ticket.remarks}
-                  onChange={getTicketData}
+                  onChange={inputEvent}
                 />
               </div>
               <button type="submit" id="add-btn">
@@ -176,7 +211,35 @@ const AddTicket = () => {
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                {tickets &&
+                  tickets.map((ele) => (
+                    <tr>
+                      <td>{ele.id}</td>
+                      <td>{ele.incidentNumber}</td>
+                      <td>{ele.date}</td>
+                      <td>{ele.status}</td>
+                      <td>{ele.entity}</td>
+                      <td>{ele.slot}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-warning"
+                          id="editButton"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(ele.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
             </table>
           </div>
         </div>

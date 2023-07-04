@@ -12,6 +12,27 @@
     }
   ],
   "tickets": [
-
+    {
+      "name": "SAPTARSHI C",
+      "team_name": "L2",
+      "date": "",
+      "incidentNumber": "IM1735520",
+      "status": "Pending Customer",
+      "entity": "EAD",
+      "slot": "2",
+      "remarks": "",
+      "id": 2
+    },
+    {
+      "name": "SAPTARSHI C",
+      "team_name": "L2",
+      "date": "",
+      "incidentNumber": "IM1735520",
+      "status": "Pending Customer",
+      "entity": "EAD",
+      "slot": "2",
+      "remarks": "",
+      "id": 3
+    }
   ]
 }

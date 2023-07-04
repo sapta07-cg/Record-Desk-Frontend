@@ -4,7 +4,7 @@
     align-items: center;
 }
 form {
-    background-color: #9cf;
+    background-color: white;
     padding: 0px 20px;
     border-radius: 10px;
     justify-content: center;
@@ -53,4 +53,8 @@ input{
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+}
+
+#editButton{
+    margin-right: 5px;
 }
