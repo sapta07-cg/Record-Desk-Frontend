@@ -8,6 +8,7 @@ import Home from "./Home";
 import Employee from "./component/Employee";
 import Admin from "./Admin";
 import AddTicket from "./component/service/AddTicket";
+import EditTicket from "./component/service/EditTicket";
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
         <AppNavBar />
         <Routes>
           <Route exact path="/" Component={AddTicket} />
+          <Route
+            exact
+            path="/addticketdetail/edit/:id"
+            Component={EditTicket}
+          />
           <Route exact path="/employee" Component={Employee} />
           <Route exact path="/admin" Component={Admin} />
         </Routes>

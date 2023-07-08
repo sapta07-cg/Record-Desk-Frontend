@@ -7,6 +7,7 @@ import {
   getTicket,
 } from "../../redux/features/ticketDetailSlice";
 import Spinner from "../../common/Spinner";
+import { useNavigate } from "react-router-dom";
 
 const AddTicket = () => {
   const [ticket, setTicket] = useState({
@@ -20,6 +21,7 @@ const AddTicket = () => {
     remarks: "",
   });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { tickets, loading } = useSelector((state) => state.app);
 
   console.log("user details ", tickets);
@@ -226,6 +228,9 @@ const AddTicket = () => {
                           type="button"
                           className="btn btn-warning"
                           id="editButton"
+                          onClick={() => {
+                            navigate(`/addticketdetail/edit/${ele.id}`);
+                          }}
                         >
                           Edit
                         </button>

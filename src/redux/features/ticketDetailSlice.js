@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 // create ticket
 
 export const createTicket = createAsyncThunk(
@@ -26,11 +27,34 @@ export const createTicket = createAsyncThunk(
 export const getTicket = createAsyncThunk(
   "getTicket",
   async (args, { rejectWithValue }) => {
-    const response = await fetch("http://localhost:3002/tickets");
+    try {
+      const response = await axios.get("http://localhost:3002/tickets");
+      console.log("response from API is ", response);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+//update ticket
+
+export const updateTicket = createAsyncThunk(
+  "updateTicket",
+  async (data, { rejectWithValue }) => {
+    console.log(data);
+    const response = await fetch(`http://localhost:3002/tickets/${data.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     try {
       const result = await response.json();
-      console.log("Result from API is", result);
+      console.log("response from API is ", result);
+      console.log("data from form to send server", data);
       return result;
     } catch (err) {
       return rejectWithValue(err);
@@ -86,7 +110,7 @@ export const ticketDetail = createSlice({
     },
     [getTicket.rejected]: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     [deleteTicket.pending]: (state) => {
       state.loading = true;
@@ -99,6 +123,18 @@ export const ticketDetail = createSlice({
       }
     },
     [deleteTicket.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    [updateTicket.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateTicket.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.tickets = [action.payload];
+      //state.users = action.payload;
+    },
+    [updateTicket.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
