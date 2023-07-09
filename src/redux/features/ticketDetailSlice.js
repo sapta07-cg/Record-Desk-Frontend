@@ -5,20 +5,26 @@ import axios from "axios";
 export const createTicket = createAsyncThunk(
   "create ticket",
   async (data, { rejectWithValue }) => {
-    const response = await fetch("http://localhost:3002/tickets", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
     try {
-      const result = await response.json();
-      console.log("result from form is", result);
-      return result;
-    } catch (error) {
-      return rejectWithValue(error);
+      const response = await axios.post("http://localhost:3002/tickets", data);
+      return await response.data;
+    } catch (err) {
+      return rejectWithValue(err);
     }
+    // const response = await fetch("http://localhost:3002/tickets", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+    // try {
+    //   const result = await response.json();
+    //   console.log("result from form is", result);
+    //   return result;
+    // } catch (error) {
+    //   return rejectWithValue(error);
+    // }
   }
 );
 
@@ -42,23 +48,32 @@ export const getTicket = createAsyncThunk(
 export const updateTicket = createAsyncThunk(
   "updateTicket",
   async (data, { rejectWithValue }) => {
-    console.log(data);
-    const response = await fetch(`http://localhost:3002/tickets/${data.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
     try {
-      const result = await response.json();
-      console.log("response from API is ", result);
-      console.log("data from form to send server", data);
-      return result;
+      const response = await axios.put(
+        `http://localhost:3002/tickets/${data.id}`,
+        data
+      );
+      return await response.data;
     } catch (err) {
       return rejectWithValue(err);
     }
+    // console.log(data);
+    // const response = await fetch(`http://localhost:3002/tickets/${data.id}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(data),
+    // });
+
+    // try {
+    //   const result = await response.json();
+    //   console.log("response from API is ", result);
+    //   console.log("data from form to send server", data);
+    //   return result;
+    // } catch (err) {
+    //   return rejectWithValue(err);
+    // }
   }
 );
 
@@ -67,17 +82,25 @@ export const updateTicket = createAsyncThunk(
 export const deleteTicket = createAsyncThunk(
   "deleteTicket",
   async (id, { rejectWithValue }) => {
-    const response = await fetch(`http://localhost:3002/tickets/${id}`, {
-      method: "DELETE",
-    });
-
     try {
-      const result = await response.json();
-      return result;
+      const response = await axios.delete(
+        `http://localhost:3002/tickets/${id}`
+      );
+      return await response.data;
     } catch (err) {
-      console.log("error for delete is ", err);
       return rejectWithValue(err);
     }
+    // const response = await fetch(`http://localhost:3002/tickets/${id}`, {
+    //   method: "DELETE",
+    // });
+
+    // try {
+    //   const result = await response.json();
+    //   return result;
+    // } catch (err) {
+    //   console.log("error for delete is ", err);
+    //   return rejectWithValue(err);
+    // }
   }
 );
 
